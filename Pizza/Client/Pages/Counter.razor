@@ -1,0 +1,36 @@
+﻿@page "/counter"
+@using Pizza.Shared.Models;
+@using System.Text;
+@using System.Text.Json;
+@inject HttpClient client
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+    private List<ModeloPizza> pizzas;
+
+    private Tamano tamano = new Tamano {Nombre="Extra", Precio = 20f};
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        pizzas = await client.GetFromJsonAsync<List<ModeloPizza>>("api/Pizzas");
+
+
+        var enviarJSON = JsonSerializer.Serialize(tamano);
+        var enviarContent = new StringContent(enviarJSON, Encoding.UTF8, "application/json");
+        var responseHttp = await client.PostAsync("api/Pizzas", enviarContent);
+        
+    }
+}
