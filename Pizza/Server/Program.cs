@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
-using Pizza.Server.Data;
+using Pizza.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 

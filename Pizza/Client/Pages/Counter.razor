@@ -14,7 +14,6 @@
 
 @code {
     private int currentCount = 0;
-    private List<ModeloPizza> pizzas;
 
     private Tamano tamano = new Tamano {Nombre="Extra", Precio = 20f};
 
@@ -23,14 +22,4 @@
         currentCount++;
     }
 
-    protected override async Task OnInitializedAsync()
-    {
-        pizzas = await client.GetFromJsonAsync<List<ModeloPizza>>("api/Pizzas");
-
-
-        var enviarJSON = JsonSerializer.Serialize(tamano);
-        var enviarContent = new StringContent(enviarJSON, Encoding.UTF8, "application/json");
-        var responseHttp = await client.PostAsync("api/Pizzas", enviarContent);
-        
-    }
 }
